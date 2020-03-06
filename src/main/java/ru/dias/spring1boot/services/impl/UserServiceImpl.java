@@ -1,4 +1,4 @@
-package ru.dias.spring1boot.services;
+package ru.dias.spring1boot.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,9 +9,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.dias.spring1boot.entities.Role;
+import ru.dias.spring1boot.entities.SystemUser;
 import ru.dias.spring1boot.entities.User;
 import ru.dias.spring1boot.repositories.RoleRepository;
 import ru.dias.spring1boot.repositories.UserRepository;
+import ru.dias.spring1boot.services.UserService;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -42,6 +44,21 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public User findByUserName(String userName) {
 		return userRepository.findOneByUserName(userName);
+	}
+
+	@Override
+	@Transactional
+	public void save(SystemUser systemUser) {
+		User user = new User();
+		user.setUserName(systemUser.getUserName());
+		user.setPassword(passwordEncoder.encode(systemUser.getPassword()));
+		user.setFirstName(systemUser.getFirstName());
+		user.setLastName(systemUser.getLastName());
+		user.setEmail(systemUser.getEmail());
+
+		user.setRoles(Arrays.asList(roleRepository.findOneByName("ROLE_EMPLOYEE")));
+
+		userRepository.save(user);
 	}
 
 	@Override

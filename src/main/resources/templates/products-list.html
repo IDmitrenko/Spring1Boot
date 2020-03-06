@@ -32,14 +32,18 @@
     <table class="table">
         <thead>
         <tr class="thead-dark">
+            <td>Id_custom</td>
             <td>Id</td>
+<!--            <td>Image</td>-->
             <td>Title</td>
             <td>Price</td>
             <td>Actions</td>
         </tr>
         </thead>
 
-        <tr th:each="product : ${products}">
+        <tr th:each="product, iterStat : ${products}">
+<!--            <td th:text="${iterStat.index + 1}"/>-->
+            <td th:text="${iterStat.count}"/>
             <td th:text="${product.id}"/>
             <td th:text="${product.title}"/>
             <td th:text="${product.price}"/>
