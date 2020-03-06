@@ -28,6 +28,7 @@
         <thead>
         <tr class="thead-dark">
             <td>Id</td>
+            <td>Image</td>
             <td>Name</td>
             <td>Name length</td>
             <td>Actions</td>
@@ -38,6 +39,10 @@
         <!--<tr th:each="student : ${studentsList}" th:inline="text">-->
         <tr th:each="student : ${studentsList}">
             <td th:text="${student.id}"/>
+            <td>
+                <img th:if="${student.images.size() > 0}" width="40" height="40"
+                     src="@{'/images/' + ${student.images[0].path}}" />
+            </td>
             <td th:text="${student.name}"/>
             <td th:text="${student.name.length()}"/>
             <!--<h1>Hello [[${student.name}]]!</h1>-->

@@ -1,12 +1,15 @@
 package ru.dias.spring1boot.entities;
 
+import lombok.Data;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "students")
+@Data
 public class Student {
     @Id
     @Column(name = "id")
@@ -25,31 +28,14 @@ public class Student {
     @Cascade({org.hibernate.annotations.CascadeType.DELETE, org.hibernate.annotations.CascadeType.DETACH})
     private List<Course> courses;
 
-    public Long getId() {
-        return id;
-    }
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "student")
+    private List<StudentImage> images;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-    public Student() {
+    public void addImage(StudentImage studentImage) {
+        if (images == null) {
+            images = new ArrayList<>();
+        }
+        images.add(studentImage);
     }
 
     @Override
