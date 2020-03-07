@@ -13,6 +13,8 @@
     <script type="text/javascript" th:src="@{/resources/js/main.js}"></script>
     <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}"/>
     <link type="text/css" rel="stylesheet" th:href="@{/resources/css/main.css}"/>
+
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
 </head>
 
 <body>
@@ -36,12 +38,12 @@
         </tr>
         </thead>
 
-        <!--<tr th:each="student : ${studentsList}" th:inline="text">-->
+        <tbody>
         <tr th:each="student : ${studentsList}">
             <td th:text="${student.id}"/>
             <td>
                 <img th:if="${student.images.size() > 0}" width="40" height="40"
-                     src="@{'/images/' + ${student.images[0].path}}" />
+                     th:src="@{'/images/' + ${student.images[0].path}}"/>
             </td>
             <td th:text="${student.name}"/>
             <td th:text="${student.name.length()}"/>
@@ -62,6 +64,7 @@
                 </p>
             </td>
         </tr>
+        </tbody>
     </table>
     <!--<br>-->
     <!--<a href="/">Back To Main Page</a>-->
