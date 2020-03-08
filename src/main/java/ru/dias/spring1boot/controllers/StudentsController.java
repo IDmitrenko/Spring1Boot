@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.dias.spring1boot.entities.Student;
+import ru.dias.spring1boot.services.ImageSaverService;
 import ru.dias.spring1boot.services.StudentsService;
 
 import javax.transaction.Transactional;
@@ -17,10 +18,15 @@ import java.util.List;
 @Transactional
 public class StudentsController {
     private StudentsService studentsService;
+    private ImageSaverService imageSaverService;
 
     @Autowired
     public void setStudentsService(StudentsService studentsService) {
         this.studentsService = studentsService;
+    }
+
+    public void setImageSaverService(ImageSaverService imageSaverService) {
+        this.imageSaverService = imageSaverService;
     }
 
     @RequestMapping("/list")

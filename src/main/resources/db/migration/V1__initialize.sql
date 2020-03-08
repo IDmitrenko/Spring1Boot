@@ -1,5 +1,3 @@
-BEGIN;
-
 DROP TABLE IF EXISTS product CASCADE;
 CREATE TABLE product (
     id bigserial PRIMARY KEY,
@@ -34,6 +32,13 @@ CREATE TABLE students (
     name VARCHAR(100)
 );
 
+INSERT INTO students (name) VALUES
+('Igor'),
+('Olga'),
+('Andrew'),
+('Alex'),
+('Jana');
+
 DROP TABLE IF EXISTS courses CASCADE;
 CREATE TABLE courses (
 	id bigserial PRIMARY KEY,
@@ -63,30 +68,42 @@ CREATE TABLE books (
 
 DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users (
+    id bigserial PRIMARY KEY,
     username varchar(50) NOT NULL,
-    password varchar(100) NOT NULL,
-    enabled boolean NOT NULL,
-    PRIMARY KEY (username)
+    password varchar(100) NOT NULL
 );
 
-INSERT INTO users (username, password, enabled)
+INSERT INTO users (username, password)
 VALUES
-('alex', '{noop}123', true),
-('bob', '{noop}123', true);
+('alex', '{noop}123'),
+('bob', '{noop}123');
 
-DROP TABLE IF EXISTS authorities CASCADE;
-CREATE TABLE authorities (
-    username varchar(50) NOT NULL,
-    authority varchar(50) NOT NULL,
-    CONSTRAINT USERS_AUTHORITIES_FK UNIQUE (username, authority),
-    CONSTRAINT AUTHORITIES_FK1 FOREIGN KEY (username)
-    REFERENCES users (username)
+DROP TABLE IF EXISTS roles CASCADE;
+CREATE TABLE roles (
+    id bigserial PRIMARY KEY,
+    name varchar(50) NOT NULL
 );
 
-INSERT INTO authorities
+INSERT INTO roles (name)
 VALUES
-('alex', 'ROLE_ADMIN'),
-('alex', 'ROLE_USER'),
-('bob', 'ROLE_USER');
+('ROLE_ADMIN'),
+('ROLE_USER');
 
-COMMIT;
+DROP TABLE IF EXISTS users_roles CASCADE;
+CREATE TABLE users_roles (
+	user_id bigint NOT NULL ,
+    role_id  bigint NOT NULL,
+    PRIMARY KEY (user_id, role_id),
+    CONSTRAINT FK_USER FOREIGN KEY (user_id)
+    REFERENCES users (id)
+    ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT FK_ROLE FOREIGN KEY (role_id)
+    REFERENCES roles (id)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+INSERT INTO users_roles (user_id, role_id)
+VALUES
+(1, 1),
+(1, 2),
+(2, 2);

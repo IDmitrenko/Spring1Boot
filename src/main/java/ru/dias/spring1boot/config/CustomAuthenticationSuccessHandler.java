@@ -23,7 +23,9 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	}
 
 	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+	public void onAuthenticationSuccess(HttpServletRequest request,
+										HttpServletResponse response,
+										Authentication authentication)
 			throws IOException, ServletException {
 		System.out.println("\n\nIn customAuthenticationSuccessHandler\n\n");
 		String userName = authentication.getName();
