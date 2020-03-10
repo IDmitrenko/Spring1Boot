@@ -1,5 +1,6 @@
 package ru.dias.spring1boot.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import org.hibernate.annotations.Cascade;
 
@@ -29,6 +30,7 @@ public class Student {
     private List<Course> courses;
 
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "student")
+    @JsonBackReference
     private List<StudentImage> images;
 
     public void addImage(StudentImage studentImage) {

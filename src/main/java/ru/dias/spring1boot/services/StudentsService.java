@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import ru.dias.spring1boot.entities.Course;
 import ru.dias.spring1boot.entities.Student;
 import ru.dias.spring1boot.repositories.StudentsRepository;
+import ru.dias.spring1boot.utils.StudentNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentsService {
@@ -68,4 +70,26 @@ public class StudentsService {
         studentsRepository.save(student);
     }
 
+    // get
+    public Student getStudentById(Long id) {
+        Optional<Student> student = studentsRepository.findById(id);
+        if (!student.isPresent()) {
+            throw new StudentNotFoundException("Student with id = " + id + " not found");
+        }
+        return student.get();
+    }
+
+    // post put
+    public Student saveOrUpdate(Student student) {
+        return studentsRepository.save(student);
+    }
+
+    // delete
+    public void delete(Long id) {
+        Optional<Student> student = studentsRepository.findById(id);
+        if (!student.isPresent()) {
+            throw new StudentNotFoundException("Student with id = " + id + " not found");
+        }
+        studentsRepository.delete(student.get());
+    }
 }
