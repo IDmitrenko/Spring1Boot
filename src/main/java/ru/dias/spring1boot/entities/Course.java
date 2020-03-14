@@ -1,5 +1,6 @@
 package ru.dias.spring1boot.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class Course {
             inverseJoinColumns=@JoinColumn(name="student_id")
     )
     @Cascade({org.hibernate.annotations.CascadeType.DELETE, org.hibernate.annotations.CascadeType.DETACH})
+    @JsonBackReference
     private List<Student> students;
 
     public Long getId() {
